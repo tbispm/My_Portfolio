@@ -1,78 +1,111 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useRef, useState, useContext } from 'react';
 import { gsap } from 'gsap';
-import { SunIcon, MoonIcon } from '@heroicons/react/24/solid';
-import { ThemeContext } from '../context/ThemeContext';
+import { SunIcon, MoonIcon, SparklesIcon } from '@heroicons/react/24/solid';
+import { ThemeContext } from '../context/themeContextValue';
 import '../styles/header.css';
+
+const navItems = [
+  { id: 'home', label: 'Home' },
+  { id: 'about', label: 'About' },
+  { id: 'projects', label: 'Projects' },
+  { id: 'skills', label: 'Skills' },
+  { id: 'contact', label: 'Contact' },
+];
 
 function Header() {
   const { theme, toggleTheme } = useContext(ThemeContext);
   const [activeSection, setActiveSection] = useState('home');
+  const navListRef = useRef(null);
 
   useEffect(() => {
-    const sections = ['home', 'about', 'projects', 'skills', 'contact'];
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
-        });
-      },
-      { threshold: 0.5 } // Trigger when 50% of section is visible
-    );
+    let animationFrameId = null;
 
-    sections.forEach((section) => {
-      const element = document.getElementById(section);
-      if (element) observer.observe(element);
-    });
+    const updateActiveSection = () => {
+      const headerOffset = 104;
+      const viewportMarker = window.scrollY + headerOffset;
+      const pageBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+
+      if (pageBottom) {
+        setActiveSection('contact');
+        return;
+      }
+
+      const currentSection = navItems.reduce((current, section) => {
+        const element = document.getElementById(section.id);
+        if (!element) return current;
+
+        return element.offsetTop <= viewportMarker ? section.id : current;
+      }, 'home');
+
+      setActiveSection(currentSection);
+    };
+
+    const handleScroll = () => {
+      if (animationFrameId) return;
+
+      animationFrameId = window.requestAnimationFrame(() => {
+        updateActiveSection();
+        animationFrameId = null;
+      });
+    };
+
+    updateActiveSection();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', updateActiveSection);
 
     return () => {
-      sections.forEach((section) => {
-        const element = document.getElementById(section);
-        if (element) observer.unobserve(element);
-      });
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', updateActiveSection);
+      if (animationFrameId) window.cancelAnimationFrame(animationFrameId);
     };
   }, []);
 
   useEffect(() => {
-    const navItems = document.querySelectorAll('.nav-item');
-    gsap.set(navItems, { opacity: 1, y: 0 });
+    const itemElements = document.querySelectorAll('.nav-item');
+    gsap.set(itemElements, { opacity: 1, y: 0 });
     gsap.fromTo(
-      navItems,
+      itemElements,
       { y: -20, opacity: 0 },
       { y: 0, opacity: 1, duration: 1, stagger: 0.2, ease: 'power3.out' }
     );
   }, []);
 
+  useEffect(() => {
+    const activeLink = navListRef.current?.querySelector('.nav-item.active .nav-link');
+    activeLink?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  }, [activeSection]);
+
   return (
     <header className="header">
-      <nav>
-        <ul className="nav-list">
-          <li className={`nav-item ${activeSection === 'home' ? 'active' : ''}`}>
-            <a className="nav-link" href="#home">Home</a>
-          </li>
-          <li className={`nav-item ${activeSection === 'about' ? 'active' : ''}`}>
-            <a className="nav-link" href="#about">About</a>
-          </li>
-          <li className={`nav-item ${activeSection === 'projects' ? 'active' : ''}`}>
-            <a className="nav-link" href="#projects">Projects</a>
-          </li>
-          <li className={`nav-item ${activeSection === 'skills' ? 'active' : ''}`}>
-            <a className="nav-link" href="#skills">Skills</a>
-          </li>
-          <li className={`nav-item ${activeSection === 'contact' ? 'active' : ''}`}>
-            <a className="nav-link" href="#contact">Contact</a>
-          </li>
-          <li className="nav-item">
-            <button className="theme-toggle" onClick={toggleTheme} aria-label="Toggle theme">
-              {theme === 'dark' ? (
-                <SunIcon className="theme-icon" />
-              ) : (
-                <MoonIcon className="theme-icon" />
-              )}
-            </button>
-          </li>
+      <nav className="nav-shell" aria-label="Primary navigation">
+        <a href="#home" className="brand-mark" aria-label="TunBhone PyaeMoe home">
+          <SparklesIcon className="brand-icon" />
+          <span>TBPM</span>
+        </a>
+        <ul className="nav-list" ref={navListRef}>
+          {navItems.map((item) => (
+            <li
+              key={item.id}
+              className={`nav-item ${activeSection === item.id ? 'active' : ''}`}
+            >
+              <a
+                className="nav-link"
+                href={`#${item.id}`}
+                aria-current={activeSection === item.id ? 'page' : undefined}
+                onClick={() => setActiveSection(item.id)}
+              >
+                {item.label}
+              </a>
+            </li>
+          ))}
         </ul>
+        <button className="theme-toggle" onClick={toggleTheme} aria-label="Toggle theme">
+          {theme === 'dark' ? (
+            <SunIcon className="theme-icon" />
+          ) : (
+            <MoonIcon className="theme-icon" />
+          )}
+        </button>
       </nav>
     </header>
   );

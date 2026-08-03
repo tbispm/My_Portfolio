@@ -1,7 +1,6 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
-import profileImage from "../assets/myphoto.jpg"; // For local image
-import { ThemeContext } from "../context/ThemeContext";
+import profileImage from "../assets/myphoto.jpg";
 import "../styles/hero.css";
 
 function Hero() {
@@ -11,7 +10,7 @@ function Hero() {
   useEffect(() => {
     // GSAP animation for content
     const elements = heroRef.current?.querySelectorAll(
-      "h1, h2, p, .cta-button, .hero-image-container"
+      ".hero-kicker, h1, h2, p, .hero-actions, .hero-stat, .hero-image-container"
     );
     if (elements) {
       gsap.set(elements, { opacity: 1, y: 0 });
@@ -100,19 +99,35 @@ function Hero() {
     <section id="home" className="hero" ref={heroRef}>
       <canvas ref={canvasRef} className="hero-canvas"></canvas>
       <div className="hero-container">
-        <div className="hero-image-container">
-          <img src={profileImage} alt="Profile" className="hero-image" />
-        </div>
         <div className="hero-content">
+          <p className="hero-kicker">Frontend Developer / ICT Student</p>
           <h1>TunBhone PyaeMoe</h1>
-          <h2>Web Developer</h2>
+          <h2>Building practical web apps with clean interfaces and reliable flows.</h2>
           <p>
-            Welcome to my portfolio! I build modern, responsive web applications
-            with React and other technologies.
+            I work with React, Vite, Tailwind CSS, Node.js, and backend APIs to
+            turn real requirements into responsive products people can actually use.
           </p>
-          <a href="#contact" className="cta-button">
-            Get in Touch
-          </a>
+          <div className="hero-actions">
+            <a href="#projects" className="cta-button primary">View Projects</a>
+            <a href="#contact" className="cta-button secondary">Contact Me</a>
+          </div>
+          <div className="hero-stats" aria-label="Portfolio highlights">
+            <div className="hero-stat">
+              <span>6</span>
+              <p>Projects</p>
+            </div>
+            <div className="hero-stat">
+              <span>React</span>
+              <p>Main Stack</p>
+            </div>
+            <div className="hero-stat">
+              <span>Live</span>
+              <p>Hosted Work</p>
+            </div>
+          </div>
+        </div>
+        <div className="hero-image-container">
+          <img src={profileImage} alt="TunBhone PyaeMoe" className="hero-image" />
         </div>
       </div>
     </section>

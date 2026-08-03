@@ -2,31 +2,77 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import "../styles/skills.css";
 
+const skills = [
+  {
+    name: "HTML",
+    type: "Markup",
+    icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/HTML5_logo_and_wordmark.svg/250px-HTML5_logo_and_wordmark.svg.png",
+  },
+  {
+    name: "CSS",
+    type: "Styling",
+    icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/CSS3_logo_and_wordmark.svg/1920px-CSS3_logo_and_wordmark.svg.png",
+  },
+  {
+    name: "Tailwind CSS",
+    type: "UI System",
+    icon: "https://cdn.creazilla.com/icons/3254431/tailwindcss-icon-icon-size_512.png",
+  },
+  {
+    name: "JavaScript",
+    type: "ES6+",
+    icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Javascript_badge.svg/1280px-Javascript_badge.svg.png",
+  },
+  {
+    name: "TypeScript",
+    type: "Typed JS",
+    icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Typescript.svg/512px-Typescript.svg.png",
+  },
+  {
+    name: "React",
+    type: "Frontend",
+    icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/React_Logo_SVG.svg/250px-React_Logo_SVG.svg.png",
+  },
+  {
+    name: "Node.js",
+    type: "Backend",
+    icon: "https://www.mindrops.com/images/nodejs-image.webp",
+  },
+  {
+    name: "Python",
+    type: "Programming",
+    icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/3840px-Python-logo-notext.svg.png",
+  },
+  {
+    name: "MySQL",
+    type: "Database",
+    icon: "https://cdn.prod.website-files.com/66754aa69a5d872183713f9c/672dfced5422c158fb5a6002_mysql%20logo.png",
+  },
+];
+
 function Skills() {
   const skillsRef = useRef(null);
   const canvasRef = useRef(null);
 
   useEffect(() => {
-    const items = skillsRef.current.querySelectorAll(".skill-item");
-    gsap.set(items, { opacity: 1, scale: 1 });
+    const items = skillsRef.current.querySelectorAll(".skill-item, .skill-summary");
+    gsap.set(items, { opacity: 1, y: 0 });
     gsap.fromTo(
       items,
-      { scale: 0.8, opacity: 0 },
+      { y: 24, opacity: 0 },
       {
-        scale: 1,
+        y: 0,
         opacity: 1,
-        duration: 1,
-        stagger: 0.2,
-        ease: "elastic.out(1, 0.5)",
+        duration: 0.9,
+        stagger: 0.08,
+        ease: "power3.out",
       }
     );
 
-    // Canvas animation for flowing lines
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext("2d");
     if (!canvas || !ctx) return;
 
-    // Set canvas size
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
       canvas.height = skillsRef.current.offsetHeight;
@@ -34,23 +80,22 @@ function Skills() {
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
 
-    // Line animation
     const lines = [];
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 12; i++) {
       lines.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 3.25,
-        vy: (Math.random() - 0.5) * 3.25,
+        vx: (Math.random() - 0.5) * 2,
+        vy: (Math.random() - 0.5) * 2,
       });
     }
 
     let animationFrameId;
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.strokeStyle = "#FFFFFF";
+      ctx.strokeStyle = "#49d17d";
       ctx.lineWidth = 1;
-      ctx.globalAlpha = 0.5;
+      ctx.globalAlpha = 0.16;
 
       lines.forEach((line, i) => {
         ctx.beginPath();
@@ -65,7 +110,7 @@ function Skills() {
         lines.forEach((otherLine, j) => {
           if (i !== j) {
             const dist = Math.hypot(line.x - otherLine.x, line.y - otherLine.y);
-            if (dist < 100) {
+            if (dist < 110) {
               ctx.beginPath();
               ctx.moveTo(line.x, line.y);
               ctx.lineTo(otherLine.x, otherLine.y);
@@ -88,58 +133,36 @@ function Skills() {
   return (
     <section id="skills" className="skills" ref={skillsRef}>
       <canvas ref={canvasRef} className="skills-canvas"></canvas>
-      <h2>My Skills</h2>
-      <div className="skills-grid">
-        <div className="skill-item">
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/HTML5_logo_and_wordmark.svg/250px-HTML5_logo_and_wordmark.svg.png"
-            alt="HTML5"
-            className="skill-icon"
-          />
-          <p>HTML</p>
+      <div className="skills-container">
+        <div className="skills-header">
+          <p className="section-kicker">Skills</p>
+          <h2 className="section-title">Tools I use to ship projects.</h2>
+          <p className="section-lede">
+            A frontend-heavy stack with enough backend and database knowledge to
+            connect interfaces to real data, authentication, and admin workflows.
+          </p>
         </div>
-        <div className="skill-item"><img
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/CSS3_logo_and_wordmark.svg/1920px-CSS3_logo_and_wordmark.svg.png"
-            alt="CSS"
-            className="skill-icon"
-          />
-          <p>CSS</p></div>
-        <div className="skill-item"><img
-            src="https://cdn.creazilla.com/icons/3254431/tailwindcss-icon-icon-size_512.png"
-            alt="TailWind CSS"
-            className="skill-icon border-2 border-gray-300 rounded-lg"
-          />
-          <p>TailWind CSS</p></div>
-        <div className="skill-item"><img
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Javascript_badge.svg/1280px-Javascript_badge.svg.png"
-            alt="JavaScript"
-            className="skill-icon"
-          />
-          <p>JavaScript (ES6+)</p></div>
-        <div className="skill-item"><img
-            src="https://www.mindrops.com/images/nodejs-image.webp"
-            alt="Node.js"
-            className="skill-icon"
-          />
-          <p>Node.js</p></div>
-        <div className="skill-item"><img
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/3840px-Python-logo-notext.svg.png"
-            alt="Python"
-            className="skill-icon"
-          />
-          <p>Python</p></div>
-        <div className="skill-item"><img
-            src="https://cdn.prod.website-files.com/66754aa69a5d872183713f9c/672dfced5422c158fb5a6002_mysql%20logo.png"
-            alt="MySQL"
-            className="skill-icon"
-          />
-          <p>MySQL</p></div>
-        <div className="skill-item"><img
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/React_Logo_SVG.svg/250px-React_Logo_SVG.svg.png"
-            alt="React.Js"
-            className="skill-icon"
-          />
-          <p>React.Js</p></div>
+        <div className="skills-layout">
+          <div className="skill-summary">
+            <span>Core Focus</span>
+            <h3>React interfaces, responsive systems, and admin workflows.</h3>
+            <p>
+              I care about clean UI details, clear information hierarchy, and
+              features that stay easy to understand after the first version.
+            </p>
+          </div>
+          <div className="skills-grid">
+            {skills.map((skill) => (
+              <div className="skill-item" key={skill.name}>
+                <img src={skill.icon} alt={skill.name} className="skill-icon" />
+                <div>
+                  <h3>{skill.name}</h3>
+                  <p>{skill.type}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );

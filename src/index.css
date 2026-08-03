@@ -1,47 +1,155 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
 
-     :root {
-      /*DarkMode*/
-       --bg-primary: #06102c;
-       --bg-secondary: #000000;
-       --text-primary: #E8ECEF;
-       --text-secondary: #D3D8DC;
-       --accent: #00D4FF;
-       --hover: #FFD700;
-     }
+:root {
+  color-scheme: dark;
+  --bg-primary: #111412;
+  --bg-secondary: #171d1b;
+  --surface: rgba(26, 32, 30, 0.78);
+  --surface-solid: #1b211f;
+  --surface-raised: #202724;
+  --border: rgba(255, 255, 255, 0.1);
+  --text-primary: #f4f7f3;
+  --text-secondary: #b8c4bd;
+  --muted: #83918a;
+  --accent: #49d17d;
+  --accent-strong: #19a463;
+  --accent-cool: #38bdf8;
+  --accent-warm: #f97316;
+  --hover: #7dd3fc;
+  --shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
+  --radius: 8px;
+  --section-padding: clamp(4rem, 8vw, 7rem) clamp(1rem, 4vw, 2rem);
+}
 
-     /*LightMode*/
-     [data-theme="light"] {
-       --bg-primary: #D7B9A5;
-       --bg-secondary: #A68A64;
-       --text-primary: #1A1A1A;
-       --text-secondary: #4A4A4A;
-       --accent: #ffd900;
-       --hover: #D4A017;
-     }
+[data-theme="light"] {
+  color-scheme: light;
+  --bg-primary: #f7f8f6;
+  --bg-secondary: #eef2ee;
+  --surface: rgba(255, 255, 255, 0.82);
+  --surface-solid: #ffffff;
+  --surface-raised: #f2f5f1;
+  --border: rgba(17, 20, 18, 0.12);
+  --text-primary: #151a17;
+  --text-secondary: #49554f;
+  --muted: #6a756f;
+  --accent: #16844e;
+  --accent-strong: #0f6b43;
+  --accent-cool: #0577a8;
+  --accent-warm: #d9541f;
+  --hover: #0d8bbd;
+  --shadow: 0 22px 70px rgba(36, 52, 42, 0.14);
+}
 
-     * {
-       margin: 0;
-       padding: 0;
-       box-sizing: border-box;
-     }
+* {
+  box-sizing: border-box;
+}
 
-     html, body {
-       font-family: 'Poppins', Arial, sans-serif;
-       background: var(--bg-primary) !important;
-       color: var(--text-primary) !important;
-       -webkit-font-smoothing: antialiased;
-       -moz-osx-font-smoothing: grayscale;
-       width: 100%;
-       min-height: 100vh;
-       opacity: 1 !important;
-     }
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 92px;
+}
 
-     .app {
-      width: 100%;
-      opacity: 1 !important;
-     }
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  font-family: "Inter", Arial, sans-serif;
+  background:
+    linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
-     h1, h2, h3, p, a {
-      opacity: 1 !important;
-     }
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 72px 72px;
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.55), transparent 65%);
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.55), transparent 65%);
+}
+
+button,
+a {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+.app {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--accent-cool);
+  outline-offset: 3px;
+}
+
+.section-kicker {
+  margin: 0 0 0.75rem;
+  color: var(--accent-cool);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.section-title {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  line-height: 1;
+  font-weight: 800;
+}
+
+.section-lede {
+  max-width: 760px;
+  margin: 1rem auto 0;
+  color: var(--text-secondary);
+  font-size: clamp(1rem, 1.6vw, 1.12rem);
+  line-height: 1.8;
+}
+
+#home,
+#about,
+#projects,
+#skills,
+#contact {
+  scroll-margin-top: 92px;
+}
+
+@media (max-width: 520px) {
+  html {
+    scroll-padding-top: 78px;
+  }
+
+  #home,
+  #about,
+  #projects,
+  #skills,
+  #contact {
+    scroll-margin-top: 78px;
+  }
+
+  .section-title {
+    font-size: clamp(1.85rem, 12vw, 2.55rem);
+    line-height: 1.06;
+  }
+}

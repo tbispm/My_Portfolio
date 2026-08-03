@@ -7,23 +7,22 @@ function About() {
   const canvasRef = useRef(null);
 
   useEffect(() => {
-    // GSAP animation for content
-    const elements = aboutRef.current?.querySelectorAll("h2, p");
+    const elements = aboutRef.current?.querySelectorAll(
+      ".about-heading, .about-copy p, .about-highlights span"
+    );
     if (elements) {
       gsap.set(elements, { opacity: 1, y: 0 });
       gsap.fromTo(
         elements,
         { y: 20, opacity: 0 },
-        { y: 0, opacity: 1, duration: 1, stagger: 0.2, ease: "power3.out" }
+        { y: 0, opacity: 1, duration: 0.9, stagger: 0.12, ease: "power3.out" }
       );
     }
 
-    // Canvas animation for flowing lines
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext("2d");
     if (!canvas || !ctx) return;
 
-    // Set canvas size
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
       canvas.height = aboutRef.current.offsetHeight;
@@ -31,23 +30,22 @@ function About() {
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
 
-    // Line animation
     const lines = [];
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 14; i++) {
       lines.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 4,
-        vy: (Math.random() - 0.5) * 4,
+        vx: (Math.random() - 0.5) * 2,
+        vy: (Math.random() - 0.5) * 2,
       });
     }
 
     let animationFrameId;
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.strokeStyle = "#FFFFFF";
+      ctx.strokeStyle = "#38bdf8";
       ctx.lineWidth = 1;
-      ctx.globalAlpha = 0.5;
+      ctx.globalAlpha = 0.22;
 
       lines.forEach((line, i) => {
         ctx.beginPath();
@@ -62,7 +60,7 @@ function About() {
         lines.forEach((otherLine, j) => {
           if (i !== j) {
             const dist = Math.hypot(line.x - otherLine.x, line.y - otherLine.y);
-            if (dist < 100) {
+            if (dist < 120) {
               ctx.beginPath();
               ctx.moveTo(line.x, line.y);
               ctx.lineTo(otherLine.x, otherLine.y);
@@ -86,10 +84,30 @@ function About() {
     <section id="about" className="about" ref={aboutRef}>
       <canvas ref={canvasRef} className="about-canvas"></canvas>
       <div className="about-container">
-        <h2>About Me</h2>
-        <p>
-          I’m a final-year ICT undergraduate at Rangsit University, Thailand. I have strong technical skills in HTML, CSS, JavaScript (ES6+), React (Vite), TailwindCSS, Node.js, and SQLite, and a growing interest in applying AI to solve real-world challenges. I’m passionate about continuous learning, problem-solving, and building practical solutions that combine creativity and technology.
-        </p>
+        <div className="about-heading">
+          <p className="section-kicker">About Me</p>
+          <h2 className="section-title">
+            I like building things that are clear, fast, and useful.
+          </h2>
+        </div>
+        <div className="about-copy">
+          <p>
+            I'm a final-year ICT undergraduate at Rangsit University, Thailand,
+            focused on modern web development with React, Vite, Tailwind CSS,
+            Node.js, and SQL databases.
+          </p>
+          <p>
+            I enjoy turning real project requirements into practical interfaces:
+            booking flows, dashboards, management tools, and responsive websites
+            that feel simple for users and maintainable for developers.
+          </p>
+          <div className="about-highlights" aria-label="About highlights">
+            <span>Frontend Development</span>
+            <span>Admin Dashboards</span>
+            <span>API Integration</span>
+            <span>Responsive UI</span>
+          </div>
+        </div>
       </div>
     </section>
   );

@@ -1,55 +1,51 @@
-import { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import '../styles/footer.css';
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import "../styles/footer.css";
 
 function Footer() {
   const footerRef = useRef(null);
   const canvasRef = useRef(null);
 
   useEffect(() => {
-    // GSAP animation for content
-    const elements = footerRef.current?.querySelectorAll('p');
+    const elements = footerRef.current?.querySelectorAll("p, a");
     if (elements) {
       gsap.set(elements, { opacity: 1, y: 0 });
       gsap.fromTo(
         elements,
-        { y: 20, opacity: 0 },
-        { y: 0, opacity: 1, duration: 1, stagger: 0.2, ease: 'power3.out' }
+        { y: 16, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.8, stagger: 0.08, ease: "power3.out" }
       );
     }
 
-    // Canvas animation for flowing lines
     const canvas = canvasRef.current;
-    const ctx = canvas?.getContext('2d');
+    const ctx = canvas?.getContext("2d");
     if (!canvas || !ctx) return;
 
-    // Set canvas size
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
       canvas.height = footerRef.current.offsetHeight;
     };
     resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
+    window.addEventListener("resize", resizeCanvas);
 
-    // Line animation
     const lines = [];
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 6; i++) {
       lines.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 3.25,
-        vy: (Math.random() - 0.5) * 3.25,
+        vx: (Math.random() - 0.5) * 1.6,
+        vy: (Math.random() - 0.5) * 1.6,
       });
     }
 
     let animationFrameId;
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.strokeStyle = '#FFFFFF';
+      ctx.strokeStyle = "#38bdf8";
       ctx.lineWidth = 1;
-      ctx.globalAlpha = 0.5;
+      ctx.globalAlpha = 0.14;
 
-      lines.forEach((line, i) => {
+      lines.forEach((line) => {
         ctx.beginPath();
         ctx.moveTo(line.x, line.y);
         line.x += line.vx;
@@ -58,18 +54,6 @@ function Footer() {
         if (line.y < 0 || line.y > canvas.height) line.vy *= -1;
         ctx.lineTo(line.x, line.y);
         ctx.stroke();
-
-        lines.forEach((otherLine, j) => {
-          if (i !== j) {
-            const dist = Math.hypot(line.x - otherLine.x, line.y - otherLine.y);
-            if (dist < 100) {
-              ctx.beginPath();
-              ctx.moveTo(line.x, line.y);
-              ctx.lineTo(otherLine.x, otherLine.y);
-              ctx.stroke();
-            }
-          }
-        });
       });
 
       animationFrameId = requestAnimationFrame(animate);
@@ -77,7 +61,7 @@ function Footer() {
     animate();
 
     return () => {
-      window.removeEventListener('resize', resizeCanvas);
+      window.removeEventListener("resize", resizeCanvas);
       cancelAnimationFrame(animationFrameId);
     };
   }, []);
@@ -86,7 +70,8 @@ function Footer() {
     <footer className="footer" ref={footerRef}>
       <canvas ref={canvasRef} className="footer-canvas"></canvas>
       <div className="footer-container">
-        <p>© 2025 TunBhone PyaeMoe. All rights reserved.</p>
+        <p>&copy; 2026 TunBhone PyaeMoe. Built with React and Vite.</p>
+        <a href="#home">Back to top</a>
       </div>
     </footer>
   );

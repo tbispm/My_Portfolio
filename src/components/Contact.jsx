@@ -1,55 +1,77 @@
-import { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import '../styles/contact.css';
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { EnvelopeIcon, CodeBracketIcon, LinkIcon } from "@heroicons/react/24/outline";
+import "../styles/contact.css";
+
+const contactLinks = [
+  {
+    label: "Email",
+    value: "tunbhonepyaemoe@gmail.com",
+    href: "mailto:tunbhonepyaemoe@gmail.com",
+    Icon: EnvelopeIcon,
+  },
+  {
+    label: "GitHub",
+    value: "pyaemoe23212",
+    href: "https://github.com/pyaemoe23212",
+    Icon: CodeBracketIcon,
+  },
+  {
+    label: "LinkedIn",
+    value: "Tun Bhone Pyae Moe",
+    href: "https://www.linkedin.com/in/tun-bhone-pyae-moe-5092a0372/",
+    Icon: LinkIcon,
+  },
+];
 
 function Contact() {
   const contactRef = useRef(null);
   const canvasRef = useRef(null);
-  
+
   useEffect(() => {
-    const elements = contactRef.current.children;
-    gsap.set(elements, { opacity: 1, x: 0 });
+    const elements = contactRef.current.querySelectorAll(
+      ".contact-heading, .contact-card, .contact-note"
+    );
+    gsap.set(elements, { opacity: 1, y: 0 });
     gsap.fromTo(
       elements,
-      { x: -50, opacity: 0 },
+      { y: 24, opacity: 0 },
       {
-        x: 0,
+        y: 0,
         opacity: 1,
-        duration: 1,
-        stagger: 0.2,
-        ease: 'power3.out',
+        duration: 0.9,
+        stagger: 0.1,
+        ease: "power3.out",
       }
     );
 
-        const canvas = canvasRef.current;
-    const ctx = canvas?.getContext('2d');
+    const canvas = canvasRef.current;
+    const ctx = canvas?.getContext("2d");
     if (!canvas || !ctx) return;
 
-    // Set canvas size
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
       canvas.height = contactRef.current.offsetHeight;
     };
     resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
+    window.addEventListener("resize", resizeCanvas);
 
-    // Line animation
     const lines = [];
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 10; i++) {
       lines.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 3.25,
-        vy: (Math.random() - 0.5) * 3.25,
+        vx: (Math.random() - 0.5) * 2,
+        vy: (Math.random() - 0.5) * 2,
       });
     }
 
     let animationFrameId;
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.strokeStyle = '#FFFFFF';
+      ctx.strokeStyle = "#f97316";
       ctx.lineWidth = 1;
-      ctx.globalAlpha = 0.5;
+      ctx.globalAlpha = 0.16;
 
       lines.forEach((line, i) => {
         ctx.beginPath();
@@ -64,7 +86,7 @@ function Contact() {
         lines.forEach((otherLine, j) => {
           if (i !== j) {
             const dist = Math.hypot(line.x - otherLine.x, line.y - otherLine.y);
-            if (dist < 100) {
+            if (dist < 110) {
               ctx.beginPath();
               ctx.moveTo(line.x, line.y);
               ctx.lineTo(otherLine.x, otherLine.y);
@@ -79,7 +101,7 @@ function Contact() {
     animate();
 
     return () => {
-      window.removeEventListener('resize', resizeCanvas);
+      window.removeEventListener("resize", resizeCanvas);
       cancelAnimationFrame(animationFrameId);
     };
   }, []);
@@ -87,12 +109,37 @@ function Contact() {
   return (
     <section id="contact" className="contact" ref={contactRef}>
       <canvas ref={canvasRef} className="contact-canvas"></canvas>
-      <h2>Get in Touch</h2>
-      <p>Feel free to reach out via email or connect with me on social platforms!</p>
-      <div className="contact-links">
-        <a href="mailto:tunbhonepyaemoe@gmail.com">Email</a>
-        <a href="https://github.com/pyaemoe23212">GitHub</a>
-        <a href="https://www.linkedin.com/in/tun-bhone-pyae-moe-5092a0372/">LinkedIn</a>
+      <div className="contact-container">
+        <div className="contact-heading">
+          <p className="section-kicker">Contact</p>
+          <h2 className="section-title">Let's build something useful.</h2>
+          <p className="section-lede">
+            Open to internship opportunities, frontend projects, and product
+            ideas that need clean implementation.
+          </p>
+        </div>
+
+        <div className="contact-links">
+          {contactLinks.map((link) => {
+            const ContactIcon = link.Icon;
+
+            return (
+              <a
+                key={link.label}
+                href={link.href}
+                className="contact-card"
+                target={link.label === "Email" ? undefined : "_blank"}
+                rel={link.label === "Email" ? undefined : "noopener noreferrer"}
+              >
+                <ContactIcon className="contact-icon" />
+                <span>{link.label}</span>
+                <strong>{link.value}</strong>
+              </a>
+            );
+          })}
+        </div>
+
+        <p className="contact-note">Based in Thailand. Available for remote collaboration.</p>
       </div>
     </section>
   );
