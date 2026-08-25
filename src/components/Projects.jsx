@@ -12,8 +12,16 @@ import CarLogo from "../assets/CarLogo.png";
 import RentCar from "../assets/RentCar.png";
 import SoldCar from "../assets/SoldCar.png";
 import TicketImage from "../assets/TicketAnywhere.png";
+import TicketHome from "../assets/TicketAnywhereHome.png";
 import FlyQMLogo from "../assets/FlyQMLogo.jpg";
-import HorizonEliteHero from "../assets/HorizonEliteHero.png";
+import HorizonEliteHomePage from "../assets/Home Page.png";
+import HorizonEliteSignUp from "../assets/SignUp.png";
+import HorizonEliteFlightResult from "../assets/Flight Result.png";
+import HorizonElitePassengerInfo from "../assets/Passenger Information.png";
+import HorizonEliteAdditionalServices from "../assets/Additional Services.png";
+import HorizonElitePersonalizedServices from "../assets/Personalized Services.png";
+import HorizonEliteManageBooking from "../assets/Manage Booking.png";
+import HorizonEliteProfilePage from "../assets/Profile Page.png";
 import PortfolioImage from "../assets/portfolio.png";
 import EcommerceImage from "../assets/ECommerce.png";
 import ECommHome from "../assets/ECommHome.png";
@@ -61,7 +69,7 @@ const projects = [
     title: "Ticket Anywhere Website",
     description:
       "Developed the frontend using React (Vite) and Tailwind CSS for a Python Django backend, focusing on a responsive public experience for browsing events, viewing details, and booking tickets.",
-    images: [TicketImage],
+    images: [TicketHome],
     tags: ["React", "Django API", "Booking Flow", "Production"],
     githubLink: "https://github.com/pyaemoe23212/Ticket_Website_User.git",
     liveLink: "https://ticketsany.com/",
@@ -80,10 +88,20 @@ const projects = [
     title: "Horizon Elite AirTicket Platform",
     description:
       "Draft portfolio entry for the Horizon Elite air ticket platform. This project includes a modern flight booking user experience, backend services, booking management flows, payment-related modules, add-ons, check-in, tickets, boarding pass generation, and customer account features. Final photos or a video walkthrough will be added later.",
-    images: [HorizonEliteHero],
+    images: [
+      HorizonEliteHomePage,
+      HorizonEliteSignUp,
+      HorizonEliteFlightResult,
+      HorizonElitePassengerInfo,
+      HorizonEliteAdditionalServices,
+      HorizonElitePersonalizedServices,
+      HorizonEliteManageBooking,
+      HorizonEliteProfilePage,
+    ],
     tags: ["Draft", "React", "TypeScript", "Node.js", "Flight Platform"],
+    githubLink: "https://github.com/tbispm/HorizonElite_Frontend-User-.git",
     status: "Draft",
-    mediaNote: "Photos or video walkthrough coming soon",
+    mediaNote: "Screenshots arranged in booking-flow order",
   },
   {
     id: 8,

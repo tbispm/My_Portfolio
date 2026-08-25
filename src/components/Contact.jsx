@@ -12,8 +12,8 @@ const contactLinks = [
   },
   {
     label: "GitHub",
-    value: "pyaemoe23212",
-    href: "https://github.com/pyaemoe23212",
+    value: "tbispm",
+    href: "https://github.com/tbispm",
     Icon: CodeBracketIcon,
   },
   {

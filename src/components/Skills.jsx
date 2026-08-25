@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import "../styles/skills.css";
+import TypeScriptLogo from "../assets/TypeScriptLogo.png";
 
 const skills = [
   {
@@ -26,7 +27,7 @@ const skills = [
   {
     name: "TypeScript",
     type: "Typed JS",
-    icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Typescript.svg/512px-Typescript.svg.png",
+    icon: TypeScriptLogo,
   },
   {
     name: "React",
