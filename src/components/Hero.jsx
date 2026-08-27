@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import profileImage from "../assets/myphoto.jpg";
+import { projectCount } from "../data/projects";
 import "../styles/hero.css";
 
 function Hero() {
@@ -113,7 +114,7 @@ function Hero() {
           </div>
           <div className="hero-stats" aria-label="Portfolio highlights">
             <div className="hero-stat">
-              <span>6</span>
+              <span>{projectCount}</span>
               <p>Projects</p>
             </div>
             <div className="hero-stat">

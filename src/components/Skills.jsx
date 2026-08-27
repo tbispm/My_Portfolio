@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import "../styles/skills.css";
 import TypeScriptLogo from "../assets/TypeScriptLogo.png";
+import NextJSLogo from "../assets/Next.jsLogo.png";
 
 const skills = [
   {
@@ -16,7 +17,7 @@ const skills = [
   },
   {
     name: "Tailwind CSS",
-    type: "UI System",
+    type: "CSS Framework",
     icon: "https://cdn.creazilla.com/icons/3254431/tailwindcss-icon-icon-size_512.png",
   },
   {
@@ -33,6 +34,11 @@ const skills = [
     name: "React",
     type: "Frontend",
     icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/React_Logo_SVG.svg/250px-React_Logo_SVG.svg.png",
+  },
+  {
+    name: "Next.js",
+    type: "Full-stack Framework",
+    icon: NextJSLogo,
   },
   {
     name: "Node.js",
