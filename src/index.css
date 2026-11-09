@@ -46,7 +46,6 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 92px;
 }
 
 body {
@@ -102,6 +101,65 @@ button:focus-visible {
   outline-offset: 3px;
 }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.cta-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  padding: 0.85rem 1.2rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  text-decoration: none;
+  font-weight: 800;
+  transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+}
+
+.cta-button.primary {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--bg-primary);
+}
+
+.cta-button.secondary {
+  border-color: color-mix(in srgb, var(--accent-cool) 45%, var(--border));
+  background: var(--surface);
+  color: var(--text-primary);
+}
+
+.cta-button:hover {
+  transform: translateY(-2px);
+}
+
+.cta-button.secondary:hover {
+  border-color: color-mix(in srgb, var(--accent-cool) 70%, var(--border));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 .section-kicker {
   margin: 0 0 0.75rem;
   color: var(--accent-cool);
@@ -136,10 +194,6 @@ button:focus-visible {
 }
 
 @media (max-width: 520px) {
-  html {
-    scroll-padding-top: 78px;
-  }
-
   #home,
   #about,
   #projects,

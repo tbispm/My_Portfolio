@@ -38,6 +38,9 @@
 }
 
 .hero-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
   width: fit-content;
   margin: 0 0 1rem;
   padding: 0.5rem 0.75rem;
@@ -62,16 +65,63 @@
   color: var(--text-primary);
 }
 
-.hero h2 {
-  max-width: 740px;
-  margin: 1.2rem 0 0;
-  font-size: clamp(1.3rem, 3vw, 2rem);
-  line-height: 1.18;
-  font-weight: 700;
-  color: var(--accent);
+.status-dot {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  flex: 0 0 8px;
+  border-radius: 50%;
+  background: var(--accent);
 }
 
-.hero p {
+.status-dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: statusPulse 2s ease-out infinite;
+}
+
+@keyframes statusPulse {
+  from {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  to {
+    transform: scale(2.8);
+    opacity: 0;
+  }
+}
+
+.hero-role {
+  max-width: 740px;
+  min-height: 1.2em;
+  margin: 1.2rem 0 0;
+  font-size: clamp(1.5rem, 3.4vw, 2.3rem);
+  line-height: 1.18;
+  font-weight: 800;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.role-cursor {
+  display: inline-block;
+  width: 3px;
+  height: 0.95em;
+  margin-left: 4px;
+  vertical-align: -0.1em;
+  background: currentColor;
+  animation: cursorBlink 1s steps(1) infinite;
+}
+
+@keyframes cursorBlink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.hero-summary {
   max-width: 640px;
   margin: 1.2rem 0 0;
   font-size: clamp(1rem, 1.5vw, 1.13rem);
@@ -85,39 +135,6 @@
   flex-wrap: wrap;
   gap: 0.8rem;
   margin-top: 2rem;
-}
-
-.cta-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 46px;
-  padding: 0.85rem 1.2rem;
-  text-decoration: none;
-  border-radius: var(--radius);
-  font-weight: 800;
-  transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
-}
-
-.cta-button.primary {
-  border: 1px solid var(--accent);
-  background: var(--accent);
-  color: var(--bg-primary);
-}
-
-.cta-button.secondary {
-  border: 1px solid var(--border);
-  background: var(--surface);
-  color: var(--text-primary);
-}
-
-.cta-button:hover {
-  transform: translateY(-2px);
-}
-
-.cta-button.secondary:hover {
-  border-color: var(--accent-cool);
-  border-color: color-mix(in srgb, var(--accent-cool) 55%, var(--border));
 }
 
 .hero-stats {
@@ -218,7 +235,7 @@
     width: 100%;
   }
 
-  .cta-button {
+  .hero-actions .cta-button {
     width: 100%;
   }
 }

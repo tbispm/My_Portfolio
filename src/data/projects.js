@@ -9,7 +9,6 @@ import CarHome from "../assets/CarHome.png";
 import CarLogo from "../assets/CarLogo.png";
 import RentCar from "../assets/RentCar.png";
 import SoldCar from "../assets/SoldCar.png";
-import TicketImage from "../assets/TicketAnywhere.png";
 import TicketHome from "../assets/TicketAnywhereHome.png";
 import FlyQMLogo from "../assets/FlyQMLogo.jpg";
 import HorizonEliteHomePage from "../assets/Home Page.png";
@@ -30,60 +29,36 @@ import EleAbout from "../assets/EleAbout.png";
 import EleCourse from "../assets/EleCourse.png";
 import EleTeachers from "../assets/EleTeachers.png";
 
+/** Role filters shown above the project grid. */
+export const roleFilters = [
+  { id: "all", label: "All Work" },
+  { id: "fullstack", label: "Full-Stack" },
+  { id: "frontend", label: "Frontend" },
+  { id: "uiux", label: "UI/UX" },
+];
+
+/** Featured projects with screenshots, in display order. */
 export const projects = [
   {
-    id: 1,
-    title: "RIC Gaming Club FAQ Page ChatBot",
+    id: "flyqm",
+    title: "FlyQM Flight Booking Platform",
+    type: "Internship",
+    context: "Frontend Developer Intern · Infinity Digital LLC · Jan – May 2026",
     description:
-      "Class project chatbot website for students interested in RIC Gaming Club, focused on making club information easy to access through a simple Q&A flow.",
-    images: [faqImage, FAQHome, FAQList, FAQFeedback],
-    tags: ["HTML", "CSS", "JavaScript", "Chatbot"],
-    githubLink: "https://github.com/pyaemoe23212/RIC-Gaming-Club-FAQ-Page.git",
-    liveLink:
-      "https://pyaemoe23212.github.io/RIC-Gaming-Club-FAQ-Page/Ask-a-question/ask_questions.html",
-  },
-  {
-    id: 2,
-    title: "CarShowroom Website",
-    description:
-      "Developed the frontend using React (Vite) and Tailwind CSS as part of a MERN stack project. Focused on creating a clean, responsive dashboard for available and rentable cars.",
-    images: [
-      CarHome,
-      CarShowroomImage,
-      CarLogo,
-      CarCard,
-      CarDetail,
-      SoldCar,
-      RentCar,
-    ],
-    tags: ["React", "Vite", "Tailwind CSS", "MERN"],
-    githubLink: "https://github.com/pyaemoe23212/CarShowroom_User.git",
-    liveLink: "https://carshowroomwebsite.netlify.app/",
-  },
-  {
-    id: 3,
-    title: "Ticket Anywhere Website",
-    description:
-      "Developed the frontend using React (Vite) and Tailwind CSS for a Python Django backend, focusing on a responsive public experience for browsing events, viewing details, and booking tickets.",
-    images: [TicketHome],
-    tags: ["React", "Django API", "Booking Flow", "Production"],
-    githubLink: "https://github.com/pyaemoe23212/Ticket_Website_User.git",
-    liveLink: "https://ticketsany.com/",
-  },
-  {
-    id: 6,
-    title: "FlyQM AirTicket Booking Website & Admin Panel",
-    description:
-      "Internship project for an air ticket booking platform. Built customer booking flows for flight search, passenger details, and booking review, with payments handled offline through an agent or admin. Implemented admin features for booking and payment status updates, ticket upload/download, audit history, flight search, price overrides, role-based user and staff management, and homepage content controls.",
+      "Developed user-side and admin-side interfaces of a live flight booking platform. Built customer flows for flight search, passenger details, and booking review, plus admin tools for booking and payment status, ticket upload/download, audit history, price overrides, role-based staff management, and homepage content. Built reusable, responsive UI components and worked with the backend team on REST API integration and data handling.",
     images: [FlyQMLogo],
-    tags: ["Internship", "React", "Admin Panel", "Flight Booking"],
+    tags: ["React", "Vite", "Tailwind CSS", "React Router v7", "REST API"],
+    roles: ["frontend"],
     liveLink: "https://flyqm.com/en",
+    liveLabel: "Visit Live Site",
   },
   {
-    id: 7,
-    title: "Horizon Elite AirTicket Platform",
+    id: "horizon-elite",
+    title: "HorizonElite Airline Booking System",
+    type: "Team Project",
+    context: "Co-built full-stack platform, including documentation",
     description:
-      "Full-stack air ticket platform with a modern flight booking experience, backend services, booking management flows, payment-related modules, add-ons, online check-in, ticket and boarding pass generation, and customer account features.",
+      "Full-stack airline booking platform covering flight search, passenger info, add-ons, payment, booking management, online check-in, and ticket and boarding pass generation, with a React/TypeScript UI and a Node.js/Express REST API on PostgreSQL.",
     images: [
       HorizonEliteHomePage,
       HorizonEliteSignUp,
@@ -94,36 +69,112 @@ export const projects = [
       HorizonEliteManageBooking,
       HorizonEliteProfilePage,
     ],
-    tags: ["React", "TypeScript", "Node.js", "Flight Platform"],
+    tags: ["React", "TypeScript", "Node.js", "Express.js", "PostgreSQL", "REST API"],
+    roles: ["fullstack", "frontend"],
     githubLink: "https://github.com/tbispm/HorizonElite_Frontend-User-.git",
     mediaNote: "Screenshots arranged in booking-flow order",
   },
   {
-    id: 8,
-    title: "Personal Portfolio Website",
+    id: "ticket-anywhere",
+    title: "Ticket Anywhere Event Ticketing",
+    type: "Team Project",
+    context: "Frontend contributor to a live production platform",
     description:
-      "Designed and developed my own responsive portfolio using React and Vite. It presents my projects, skills, profile, theme switching, animated sections, and interactive project image galleries in a clean modern interface.",
-    images: [PortfolioImage],
-    tags: ["React", "Vite", "GSAP", "Responsive UI", "Portfolio"],
-    mediaNote: "You are viewing this project here",
+      "Built the public-facing frontend for an event-ticketing platform on a Python Django backend: browsing events, viewing details, and booking tickets on a fully responsive layout.",
+    images: [TicketHome],
+    tags: ["React", "Vite", "Tailwind CSS", "Django API"],
+    roles: ["frontend"],
+    githubLink: "https://github.com/pyaemoe23212/Ticket_Website_User.git",
+    liveLink: "https://ticketsany.com/",
+    liveLabel: "Visit Live Site",
   },
   {
-    id: 4,
-    title: "Mini ECommerce Website",
+    id: "car-showroom",
+    title: "Car Showroom Dashboard",
+    type: "Personal Project",
     description:
-      "Developed the frontend using React (Vite) and Tailwind CSS for a PHP Laravel backend, featuring product browsing, cart management, and a smooth checkout experience.",
+      "Designed and developed the dashboard for available and rentable cars with a clean, intuitive interface, built as the React frontend of a MERN stack project.",
+    images: [CarHome, CarShowroomImage, CarLogo, CarCard, CarDetail, SoldCar, RentCar],
+    tags: ["React", "Vite", "Tailwind CSS", "MERN"],
+    roles: ["frontend"],
+    githubLink: "https://github.com/pyaemoe23212/CarShowroom_User.git",
+    liveLink: "https://carshowroomwebsite.netlify.app/",
+  },
+  {
+    id: "ecommerce",
+    title: "E-Commerce Website",
+    type: "Personal Project",
+    description:
+      "Responsive e-commerce frontend for a PHP Laravel backend, with product browsing, cart management, and a smooth checkout experience.",
     images: [EcommerceImage, ECommHome, ECommCheckout, ECommOrder],
-    tags: ["React", "Laravel API", "E-Commerce", "Checkout"],
+    tags: ["React", "Vite", "Tailwind CSS", "Laravel API"],
+    roles: ["frontend"],
     githubLink: "https://github.com/pyaemoe23212/E-Commerce-Website.git",
   },
   {
-    id: 5,
-    title: "Online Course E-Learning Website for Elementary School UI/UX",
+    id: "faq-chatbot",
+    title: "FAQ Page with AI Chatbot",
+    type: "Academic Project",
     description:
-      "Designed using Figma to create an intuitive and friendly learning interface for young students.",
+      "Responsive FAQ website for the RIC Gaming Club, enhanced with AI-powered chatbot support so students can find club information through a simple Q&A flow.",
+    images: [faqImage, FAQHome, FAQList, FAQFeedback],
+    tags: ["HTML", "CSS", "JavaScript", "AI Integration"],
+    roles: ["frontend"],
+    githubLink: "https://github.com/pyaemoe23212/RIC-Gaming-Club-FAQ-Page.git",
+    liveLink:
+      "https://pyaemoe23212.github.io/RIC-Gaming-Club-FAQ-Page/Ask-a-question/ask_questions.html",
+  },
+  {
+    id: "elearning-uiux",
+    title: "E-Learning Website for Elementary School",
+    type: "Academic Project",
+    description:
+      "UI/UX design in Figma for an online course platform, creating an intuitive, friendly learning interface for young students.",
     images: [ElementaryImage, EleCourse, EleAbout, EleTeachers],
-    tags: ["Figma", "UI/UX", "Education", "Prototype"],
+    tags: ["Figma", "UI/UX Design", "Prototype"],
+    roles: ["uiux"],
+    mediaNote: "Figma design prototype",
+  },
+  {
+    id: "portfolio",
+    title: "Personal Portfolio Website",
+    type: "Personal Project",
+    description:
+      "This site: a responsive React portfolio with role-based project filtering, theme switching, scroll animations, and interactive image galleries.",
+    images: [PortfolioImage],
+    tags: ["React", "Vite", "GSAP", "Responsive UI"],
+    roles: ["frontend", "uiux"],
+    mediaNote: "You are viewing this project here",
   },
 ];
 
-export const projectCount = projects.length;
+/** Additional academic work without screenshots, shown as a compact list. */
+export const otherProjects = [
+  {
+    id: "dotnet-crud",
+    title: "Full-Stack CRUD Application",
+    type: "Academic Project",
+    description: "Full-stack CRUD application with database integration.",
+    tags: [".NET MVC", ".NET Web API", "SQLite"],
+    roles: ["fullstack"],
+  },
+  {
+    id: "dbms",
+    title: "Database Management System",
+    type: "Academic Project",
+    description: "Data management system with a structured relational database design.",
+    tags: ["XAMPP", "SQLite"],
+    roles: ["fullstack"],
+  },
+  {
+    id: "unity-games",
+    title: "Maze Roller & Dimension Traveler",
+    type: "Academic Project",
+    description:
+      "Interactive 3D games focusing on gameplay mechanics, player interaction, and immersive design.",
+    tags: ["Unity", "3D Games"],
+    roles: [],
+  },
+];
+
+export const projectCount = projects.length + otherProjects.length;

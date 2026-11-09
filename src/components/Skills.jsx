@@ -1,173 +1,121 @@
-import { useEffect, useRef } from "react";
-import { gsap } from "gsap";
+import { useRef } from "react";
+import {
+  AcademicCapIcon,
+  ArrowsRightLeftIcon,
+  CircleStackIcon,
+  CodeBracketIcon,
+  ServerStackIcon,
+  SparklesIcon,
+  WindowIcon,
+  WrenchScrewdriverIcon,
+} from "@heroicons/react/24/outline";
+import { useReveal } from "../hooks/useReveal";
+import AnimatedBackground from "./AnimatedBackground";
 import "../styles/skills.css";
-import TypeScriptLogo from "../assets/TypeScriptLogo.png";
-import NextJSLogo from "../assets/Next.jsLogo.png";
 
-const skills = [
+const skillGroups = [
   {
-    name: "HTML",
-    type: "Markup",
-    icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/HTML5_logo_and_wordmark.svg/250px-HTML5_logo_and_wordmark.svg.png",
+    title: "Languages",
+    Icon: CodeBracketIcon,
+    items: ["TypeScript", "JavaScript (ES6+)", "HTML", "CSS", "Python"],
   },
   {
-    name: "CSS",
-    type: "Styling",
-    icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/CSS3_logo_and_wordmark.svg/1920px-CSS3_logo_and_wordmark.svg.png",
+    title: "Frontend",
+    Icon: WindowIcon,
+    items: [
+      "React (Hooks)",
+      "React Router",
+      "Next.js",
+      "Tailwind CSS",
+      "Material UI",
+      "Styled Components",
+      "Vite",
+    ],
   },
   {
-    name: "Tailwind CSS",
-    type: "CSS Framework",
-    icon: "https://cdn.creazilla.com/icons/3254431/tailwindcss-icon-icon-size_512.png",
+    title: "State & Data",
+    Icon: ArrowsRightLeftIcon,
+    items: ["Redux Toolkit", "Axios", "GraphQL", "async/await", "Error Handling"],
   },
   {
-    name: "JavaScript",
-    type: "ES6+",
-    icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Javascript_badge.svg/1280px-Javascript_badge.svg.png",
+    title: "Backend & APIs",
+    Icon: ServerStackIcon,
+    items: ["Node.js", "Express.js", "REST APIs", ".NET MVC", ".NET Web API"],
   },
   {
-    name: "TypeScript",
-    type: "Typed JS",
-    icon: TypeScriptLogo,
+    title: "Databases",
+    Icon: CircleStackIcon,
+    items: ["PostgreSQL", "SQLite", "MySQL"],
   },
   {
-    name: "React",
-    type: "Frontend",
-    icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/React_Logo_SVG.svg/250px-React_Logo_SVG.svg.png",
+    title: "Tools & Design",
+    Icon: WrenchScrewdriverIcon,
+    items: ["Git", "GitHub", "VS Code", "Postman", "Figma", "XAMPP", "Unity"],
   },
   {
-    name: "Next.js",
-    type: "Full-stack Framework",
-    icon: NextJSLogo,
+    title: "AI Tools",
+    Icon: SparklesIcon,
+    items: ["Claude Code", "ChatGPT", "GitHub Copilot"],
   },
   {
-    name: "Node.js",
-    type: "Backend",
-    icon: "https://www.mindrops.com/images/nodejs-image.webp",
-  },
-  {
-    name: "Python",
-    type: "Programming",
-    icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/3840px-Python-logo-notext.svg.png",
-  },
-  {
-    name: "MySQL",
-    type: "Database",
-    icon: "https://cdn.prod.website-files.com/66754aa69a5d872183713f9c/672dfced5422c158fb5a6002_mysql%20logo.png",
+    title: "Core Knowledge",
+    Icon: AcademicCapIcon,
+    items: ["OOP", "Data Structures & Algorithms", "System Analysis & Design", "Responsive Design"],
   },
 ];
 
 function Skills() {
   const skillsRef = useRef(null);
-  const canvasRef = useRef(null);
 
-  useEffect(() => {
-    const items = skillsRef.current.querySelectorAll(".skill-item, .skill-summary");
-    gsap.set(items, { opacity: 1, y: 0 });
-    gsap.fromTo(
-      items,
-      { y: 24, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 0.9,
-        stagger: 0.08,
-        ease: "power3.out",
-      }
-    );
-
-    const canvas = canvasRef.current;
-    const ctx = canvas?.getContext("2d");
-    if (!canvas || !ctx) return;
-
-    const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = skillsRef.current.offsetHeight;
-    };
-    resizeCanvas();
-    window.addEventListener("resize", resizeCanvas);
-
-    const lines = [];
-    for (let i = 0; i < 12; i++) {
-      lines.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 2,
-        vy: (Math.random() - 0.5) * 2,
-      });
-    }
-
-    let animationFrameId;
-    const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.strokeStyle = "#49d17d";
-      ctx.lineWidth = 1;
-      ctx.globalAlpha = 0.16;
-
-      lines.forEach((line, i) => {
-        ctx.beginPath();
-        ctx.moveTo(line.x, line.y);
-        line.x += line.vx;
-        line.y += line.vy;
-        if (line.x < 0 || line.x > canvas.width) line.vx *= -1;
-        if (line.y < 0 || line.y > canvas.height) line.vy *= -1;
-        ctx.lineTo(line.x, line.y);
-        ctx.stroke();
-
-        lines.forEach((otherLine, j) => {
-          if (i !== j) {
-            const dist = Math.hypot(line.x - otherLine.x, line.y - otherLine.y);
-            if (dist < 110) {
-              ctx.beginPath();
-              ctx.moveTo(line.x, line.y);
-              ctx.lineTo(otherLine.x, otherLine.y);
-              ctx.stroke();
-            }
-          }
-        });
-      });
-
-      animationFrameId = requestAnimationFrame(animate);
-    };
-    animate();
-
-    return () => {
-      window.removeEventListener("resize", resizeCanvas);
-      cancelAnimationFrame(animationFrameId);
-    };
-  }, []);
+  useReveal(skillsRef, ".skill-summary, .skill-group", { stagger: 0.07 });
 
   return (
     <section id="skills" className="skills" ref={skillsRef}>
-      <canvas ref={canvasRef} className="skills-canvas"></canvas>
+      <AnimatedBackground
+        className="skills-canvas"
+        color="#49d17d"
+        count={12}
+        speed={2}
+        linkDistance={110}
+        alpha={0.16}
+      />
       <div className="skills-container">
         <div className="skills-header">
           <p className="section-kicker">Skills</p>
           <h2 className="section-title">Tools I use to ship projects.</h2>
           <p className="section-lede">
-            A frontend-heavy stack with enough backend and database knowledge to
-            connect interfaces to real data, authentication, and admin workflows.
+            Strong frontend depth with full-stack range, from Figma designs and
+            React interfaces to Node.js APIs and PostgreSQL databases.
           </p>
         </div>
         <div className="skills-layout">
           <div className="skill-summary">
             <span>Core Focus</span>
-            <h3>React interfaces, responsive systems, and admin workflows.</h3>
+            <h3>End-to-end web apps: clean interfaces, solid APIs, and the data behind them.</h3>
             <p>
-              I care about clean UI details, clear information hierarchy, and
-              features that stay easy to understand after the first version.
+              I care about clean UI details, clear information hierarchy,
+              reusable components, and features that stay easy to understand
+              after the first version.
             </p>
           </div>
           <div className="skills-grid">
-            {skills.map((skill) => (
-              <div className="skill-item" key={skill.name}>
-                <img src={skill.icon} alt={skill.name} className="skill-icon" />
-                <div>
-                  <h3>{skill.name}</h3>
-                  <p>{skill.type}</p>
+            {skillGroups.map((group) => {
+              const GroupIcon = group.Icon;
+
+              return (
+                <div className="skill-group" key={group.title}>
+                  <div className="skill-group-header">
+                    <GroupIcon className="skill-group-icon" aria-hidden="true" />
+                    <h3>{group.title}</h3>
+                  </div>
+                  <ul className="skill-chips">
+                    {group.items.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>

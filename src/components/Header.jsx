@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, useContext } from 'react';
-import { gsap } from 'gsap';
+import { useReveal } from '../hooks/useReveal';
 import { SunIcon, MoonIcon, SparklesIcon } from '@heroicons/react/24/solid';
 import { ThemeContext } from '../context/themeContextValue';
 import '../styles/header.css';
@@ -60,15 +60,7 @@ function Header() {
     };
   }, []);
 
-  useEffect(() => {
-    const itemElements = document.querySelectorAll('.nav-item');
-    gsap.set(itemElements, { opacity: 1, y: 0 });
-    gsap.fromTo(
-      itemElements,
-      { y: -20, opacity: 0 },
-      { y: 0, opacity: 1, duration: 1, stagger: 0.2, ease: 'power3.out' }
-    );
-  }, []);
+  useReveal(navListRef, '.nav-item', { y: -20, duration: 1, stagger: 0.12, immediate: true });
 
   useEffect(() => {
     const activeLink = navListRef.current?.querySelector('.nav-item.active .nav-link');
